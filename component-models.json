@@ -83,7 +83,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "title",
+        "name": "title2",
         "value": "",
         "label": "Title1"
       },
