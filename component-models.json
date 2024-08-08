@@ -85,7 +85,7 @@
         "valueType": "string",
         "name": "title",
         "value": "",
-        "label": "Title"
+        "label": "Title1"
       },
       {
         "component": "select",
