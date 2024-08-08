@@ -187,43 +187,6 @@
     ]
   },
   {
-    "id": "global-header",
-    "fields": [
-      {
-        "component": "text",
-        "name": "Search Variables",
-        "value": "",
-        "label": "Search Variables",
-        "valueType": "string",
-        "description": "To search any variable"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "worldbank_logoAlt",
-        "value": "",
-        "label": "Logo Image alt text",
-        "description": "A descriptive text of the logo image."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "hamburger_menuAlt",
-        "value": "",
-        "label": "hamburger menu alt text",
-        "description": "A descriptive text of the hamburger menu."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "search_iconAlt",
-        "value": "",
-        "label": "search icon  alt text",
-        "description": "A descriptive text of the search icon."
-      }
-    ]
-  },
-  {
     "id": "curated-card",
     "fields": [
       {
