@@ -185,20 +185,5 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "title": "Global Header",
-    "id": "global-header",
-    "plugins": {
-      "xwalk": {
-        "page": {
-          "resourceType": "core/franklin/components/block/v1/block",
-          "template": {
-            "name": "Global Header",
-            "model": "global-header"
-          }
-        }
-      }
-    }
   }
 ]
