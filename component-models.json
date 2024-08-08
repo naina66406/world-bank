@@ -185,5 +185,19 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "global-header",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoAlt",
+        "value": "",
+        "label": "Logo Image alt text",
+        "description": "A descriptive text of the logo image."
+      }
+      
+    ]
   }
 ]
