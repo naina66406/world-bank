@@ -189,7 +189,13 @@
   {
     "id": "global-header",
     "fields": [
-      
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "Search Text",
+        "value": "",
+        "label": ""
+     },
       {
         "component": "text",
         "valueType": "string",
