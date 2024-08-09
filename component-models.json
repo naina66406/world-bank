@@ -194,7 +194,7 @@
         "valueType": "string",
         "name": "Search Text",
         "value": "",
-        "label": ""
+        "label": "Search Text"
      },
       {
         "component": "text",
