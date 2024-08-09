@@ -1,7 +1,6 @@
 {
   "mappings": [
-    "/content/world-bank/global/:/",
-    "/content/world-bank/global/en/:/",
-    "/content/world-bank/configuration:/.helix/config.json"
+   "/content/World-Bank/:/",
+   "/content/World-Bank/configuration:/.helix/config.json"
   ]
 }
