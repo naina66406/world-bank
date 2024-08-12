@@ -154,7 +154,7 @@ function setTitleFromFirstParagraph() {
  
   // fetching the alt text 
   const container = document.querySelector('.global-header-wrapper .global-header.block');
-console.log(container,"container")
+  console.log(container,"container")
   const paragraphs = container.querySelectorAll('p');
   console.log("paragraph",paragraphs)
   const targetElement = document.querySelector('.nav-brand'); // Adjust the selector as needed
@@ -164,8 +164,8 @@ console.log(container,"container")
     targetElement.setAttribute('title', paragraphs[1].textContent);
   }
 }
-document.addEventListener('DOMContentLoaded',()=>{ 
-  console.log("kl")
-  setTitleFromFirstParagraph()
-});
+// document.addEventListener('DOMContentLoaded',()=>{ 
+//   console.log("kl")
+//   setTitleFromFirstParagraph()
+// });
 
