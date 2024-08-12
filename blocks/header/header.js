@@ -146,4 +146,26 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+  setTitleFromFirstParagraph()
+
+
 }
+function setTitleFromFirstParagraph() {
+ 
+  // fetching the alt text 
+  const container = document.querySelector('.global-header-wrapper .global-header.block');
+console.log(container,"container")
+  const paragraphs = container.querySelectorAll('p');
+  console.log("paragraph",paragraphs)
+  const targetElement = document.querySelector('.nav-brand'); // Adjust the selector as needed
+
+  // Set the title attribute of the target element
+  if (targetElement) {
+    targetElement.setAttribute('title', paragraphs[1].textContent);
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{ 
+  console.log("kl")
+  setTitleFromFirstParagraph()
+});
+

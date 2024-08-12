@@ -1,6 +1,6 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: red;
+  background-color: var(--background-color);
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -273,3 +273,37 @@ header nav .nav-sections ul > li > ul > li {
 header nav .nav-tools {
   grid-area: tools;
 }
+/* added by naina */
+.section.nav-sections .default-content-wrapper,.section.nav-tools .default-content-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.section.nav-sections .default-content-wrapper{
+  gap:10px;
+}
+
+.section.nav-tools .default-content-wrapper{
+  gap:25px;
+}
+.section.nav-sections .default-content-wrapper h6{
+  margin: 0px;
+  font-size: 16px;
+  padding:0px 14px 3px 0px;
+  border-right: 2px solid #169AF3;
+}
+.section.nav-sections .default-content-wrapper p{
+  font-size: 16px;
+  color: #004370;
+  
+}
+.section.nav-tools h6{
+  font-size: 16px;
+  color: #004370;
+  margin: 0px;
+  
+
+}
+
+
