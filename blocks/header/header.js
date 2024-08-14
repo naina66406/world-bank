@@ -91,6 +91,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  console.log(block,"block")
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
@@ -138,7 +139,7 @@ export default async function decorate(block) {
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
+  // // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
@@ -146,26 +147,22 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
-  setTitleFromFirstParagraph()
 
+  settingAuthorDataOnHover(block)
+}
+function settingAuthorDataOnHover(block) {
+  let authoredData =null;
+  [...block.children].forEach((row) => {
+    const authoredDiv=document.querySelector('.global-header-container .global-header-wrapper');
+    const listOfAllAuthoredData=authoredDiv.querySelectorAll('p');
+
+    const logoImage = document.querySelector('.nav-brand');
+    const searchImage = document.querySelector('.icon-search');
+
+    logoImage.setAttribute('src', listOfAllAuthoredData[1] && listOfAllAuthoredData[1].textContent?listOfAllAuthoredData[1].textContent:'Alt text for logo');
+    searchImage.setAttribute('title',listOfAllAuthoredData[3]&& listOfAllAuthoredData[3].textContent?listOfAllAuthoredData[3].textContent:'Alt text for search');
+
+
+  })
 
 }
-function setTitleFromFirstParagraph() {
- 
-  // fetching the alt text 
-  const container = document.querySelector('.global-header-wrapper .global-header.block');
-  console.log(container,"container")
-  const paragraphs = container.querySelectorAll('p');
-  console.log("paragraph",paragraphs)
-  const targetElement = document.querySelector('.nav-brand'); // Adjust the selector as needed
-
-  // Set the title attribute of the target element
-  if (targetElement) {
-    targetElement.setAttribute('title', paragraphs[1].textContent);
-  }
-}
-// document.addEventListener('DOMContentLoaded',()=>{ 
-//   console.log("kl")
-//   setTitleFromFirstParagraph()
-// });
-
