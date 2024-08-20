@@ -91,6 +91,9 @@ body {
 body.appear {
   display: block;
 }
+body.blur {
+  overflow: hidden; /* Prevent scrolling */
+}
 
 header {
   height: var(--nav-height);
