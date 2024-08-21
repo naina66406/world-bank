@@ -54,15 +54,18 @@ function toggleAllNavSections(sections, expanded = false) {
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
  */
 function toggleMenu(nav, navSections, forceExpanded = null) {
+  console.log(forceExpanded,"force expand")
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
+  console.log(expanded,"expanded")
   const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
+  document.body.style.overflowY = (expanded ) ? '' : 'hidden';
+  console.log(document.body.style,"body document style")
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
+  toggleAllNavSections(navSections, expanded  ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
-  if (isDesktop.matches) {
+  // if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
         drop.setAttribute('role', 'button');
@@ -70,13 +73,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
         drop.addEventListener('focus', focusNavSection);
       }
     });
-  } else {
-    navDrops.forEach((drop) => {
-      drop.removeAttribute('role');
-      drop.removeAttribute('tabindex');
-      drop.removeEventListener('focus', focusNavSection);
-    });
-  }
+  // } else {
+  //   navDrops.forEach((drop) => {
+  //     drop.removeAttribute('role');
+  //     drop.removeAttribute('tabindex');
+  //     drop.removeEventListener('focus', focusNavSection);
+  //   });
+  // }
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
@@ -90,6 +93,83 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
+let listOfAllAuthoredData = [];
+
+function makeImageClickableNSettingAltText() {
+  const logoImage = document.querySelector('.nav-brand img');
+  const anchor = document.createElement('a');
+  Object.assign(anchor, {
+    href: listOfAllAuthoredData[1],
+    title: logoImage.alt,
+  });
+  anchor.appendChild(document.querySelector('.nav-brand picture'));
+  document.querySelector('.nav-brand .default-content-wrapper').appendChild(anchor);
+}
+
+function createSearchBox() {
+  const navWrapper = document.querySelector('.nav-wrapper');
+  const navTools = document.querySelector('.nav-tools p');
+  let searchDiv = navWrapper.querySelector('.search-div');
+  let cancelDiv = navWrapper.querySelector('.cancel-div');
+  const searchImage = document.querySelector('.icon-search');
+
+  if (searchDiv) {
+    const isVisible = searchDiv.style.display !== 'none';
+    searchDiv.style.display = isVisible ? 'none' : 'flex';
+    if (cancelDiv) {
+      cancelDiv.style.display = isVisible ? 'none' : 'flex';
+    }
+    searchImage.style.display = isVisible ? 'block' : 'none';
+  } else {
+    cancelDiv = document.createElement('div');
+    cancelDiv.classList.add('cancel-div');
+
+    const cancelImg = document.createElement('img');
+    cancelImg.classList.add('cancel-image');
+    cancelImg.src = '/icons/cancel.svg';
+    cancelImg.alt = 'cancel';
+    cancelImg.style.display = 'flex'; // Initially visible
+    cancelImg.style.cursor = 'pointer';
+    cancelImg.addEventListener('click', () => {
+      searchDiv.style.display = 'none';
+      cancelDiv.style.display = 'none';
+      searchImage.style.display = 'block'; // Show search icon again
+    });
+    cancelDiv.appendChild(cancelImg);
+    navTools.appendChild(cancelDiv);
+    // Hide search icon
+    searchImage.style.display = 'none';
+
+    searchDiv = document.createElement('div');
+    searchDiv.classList.add('search-div');
+    const searchInputBox = document.createElement('input');
+    Object.assign(searchInputBox, {
+      type: 'text',
+      id: 'search-input',
+      name: 'myInput',
+      placeholder: 'Enter text here',
+      value: listOfAllAuthoredData[0],
+    });
+    searchDiv.appendChild(searchInputBox);
+    navWrapper.appendChild(searchDiv);
+  }
+}
+
+function settingAltTextForSearchIcon() {
+  const searchImage = document.querySelector('.icon-search');
+  searchImage.addEventListener('click', () => {
+    createSearchBox();
+  });
+  searchImage.setAttribute('title', listOfAllAuthoredData[3] && listOfAllAuthoredData[3] ? listOfAllAuthoredData[3] : 'Alt text for search');
+}
+
+function fetchingAuthoredData(block) {
+  const authoredDiv = block.querySelector('.global-header-container .global-header-wrapper');
+  listOfAllAuthoredData = Array.from(authoredDiv.querySelectorAll('p')).map((p) => p.textContent);
+  makeImageClickableNSettingAltText();
+  settingAltTextForSearchIcon();
+}
+
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
@@ -146,92 +226,5 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
-  fetchingAuthoredData(block)
+  fetchingAuthoredData(block);
 }
-let listOfAllAuthoredData = [];
-
-function fetchingAuthoredData(block) {
-    const authoredDiv=block.querySelector('.global-header-container .global-header-wrapper');
-    listOfAllAuthoredData = Array.from(authoredDiv.querySelectorAll('p')).map(p => p.textContent);
-    makeImageClickableNSettingAltText();
-    settingAltTextForSearchIcon();
-}
-
-function settingAltTextForSearchIcon(){
-  const searchImage = document.querySelector('.icon-search');
-  searchImage.addEventListener('click',()=>{
-    createSearchBox();
-  })
-  searchImage.setAttribute('title',listOfAllAuthoredData[3]&& listOfAllAuthoredData[3]?listOfAllAuthoredData[3]:'Alt text for search');
-}
-
-function makeImageClickableNSettingAltText(){
-  const logoImage = document.querySelector('.nav-brand img');
-  const anchor = document.createElement('a');
-  Object.assign(anchor, {
-    href: listOfAllAuthoredData[1],
-    title: logoImage.alt,
-  });
-  anchor.appendChild(document.querySelector('.nav-brand picture'));
-  document.querySelector('.nav-brand .default-content-wrapper').appendChild(anchor);
-}
-
-function createSearchBox() {
-  const navWrapper = document.querySelector('.nav-wrapper');
-  const navTools = document.querySelector('.nav-tools p');
-  let searchDiv = navWrapper.querySelector('.search-div');
-  let cancelDiv = navWrapper.querySelector('.cancel-div');
-  const searchImage = document.querySelector('.icon-search');
-
-  if (searchDiv) {
-    const isVisible = searchDiv.style.display !== 'none';
-    searchDiv.style.display = isVisible ? 'none' : 'flex';
-    if (cancelDiv) {
-      cancelDiv.style.display = isVisible ? 'none' : 'flex';
-    }
-    searchImage.style.display = isVisible ? 'block' : 'none';
-  } else {
-    cancelDiv= document.createElement('div');
-    cancelDiv.classList.add('cancel-div');
-
-
-    let cancelImg = document.createElement('img');
-    cancelImg.classList.add('cancel-image');
-    cancelImg.src='/icons/cancel.svg';
-    cancelImg.alt='cancel';
-    
-    cancelImg.style.display = 'flex'; // Initially visible
-    cancelImg.style.cursor = 'pointer';
-    cancelImg.addEventListener('click', () => {
-      searchDiv.style.display = 'none';
-      cancelDiv.style.display = 'none';
-      searchImage.style.display = 'block'; // Show search icon again
-    });
-    cancelDiv.appendChild(cancelImg);
-    
-    navTools.appendChild(cancelDiv);
-  
-    // Hide search icon
-    searchImage.style.display = 'none';
-
-
-    searchDiv = document.createElement('div');
-    searchDiv.classList.add('search-div');
-    const searchInputBox = document.createElement('input');
-    Object.assign(searchInputBox, {
-      type: 'text',
-      id: 'searchInput',
-      name:'myInput',
-      placeholder:'Enter text here',
-      value:listOfAllAuthoredData[0]
-    });
-    searchInputBox.addEventListener('keydown',function(){
-      console.log("m,lml");
-      window.location.href='https://www.worldbank.org/en/search?q='+listOfAllAuthoredData[0]
-    })
-    searchDiv.appendChild(searchInputBox);
-    navWrapper.appendChild(searchDiv);
-  }
-}
-
-
