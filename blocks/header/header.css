@@ -328,6 +328,9 @@ header nav .nav-tools {
   font-size: 30px;
   color: #fff;
   font-weight: normal;
+  background-image: url('../../icons/search-white.svg');
+  background-repeat: no-repeat;
+  background-position: right center;
 }
 
 #search-input:focus-visible{
@@ -352,6 +355,11 @@ border: transparent;
   justify-content: center;
 }
 
-#search-input::before{
-  content:url('../../icons/search-white.png');
+.overlay{
+  background-color: rgba(255,255,255,0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0px;
 }
+

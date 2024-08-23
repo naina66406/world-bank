@@ -65,7 +65,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
-  // if (isDesktop.matches) {
+  if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
         drop.setAttribute('role', 'button');
@@ -73,13 +73,13 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
         drop.addEventListener('focus', focusNavSection);
       }
     });
-  // } else {
-  //   navDrops.forEach((drop) => {
-  //     drop.removeAttribute('role');
-  //     drop.removeAttribute('tabindex');
-  //     drop.removeEventListener('focus', focusNavSection);
-  //   });
-  // }
+  } else {
+    navDrops.forEach((drop) => {
+      drop.removeAttribute('role');
+      drop.removeAttribute('tabindex');
+      drop.removeEventListener('focus', focusNavSection);
+    });
+  }
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
@@ -111,6 +111,7 @@ function createSearchBox() {
   const navTools = document.querySelector('.nav-tools p');
   let searchDiv = navWrapper.querySelector('.search-div');
   let cancelDiv = navWrapper.querySelector('.cancel-div');
+  let overlay = document.querySelector('.overlay');
   const searchImage = document.querySelector('.icon-search');
 
   if (searchDiv) {
@@ -119,6 +120,8 @@ function createSearchBox() {
     if (cancelDiv) {
       cancelDiv.style.display = isVisible ? 'none' : 'flex';
     }
+    overlay.style.display = isVisible ? 'none':'block';
+
     searchImage.style.display = isVisible ? 'block' : 'none';
   } else {
     cancelDiv = document.createElement('div');
@@ -134,6 +137,8 @@ function createSearchBox() {
       searchDiv.style.display = 'none';
       cancelDiv.style.display = 'none';
       searchImage.style.display = 'block'; // Show search icon again
+      overlay.style.display = 'none';
+
     });
     cancelDiv.appendChild(cancelImg);
     navTools.appendChild(cancelDiv);
@@ -141,7 +146,11 @@ function createSearchBox() {
     searchImage.style.display = 'none';
 
     searchDiv = document.createElement('div');
-    searchDiv.classList.add('search-div');
+    overlay = document.createElement('div');
+    searchDiv.className = 'search-div'; 
+    overlay.className = 'overlay'; 
+    document.body.appendChild(overlay);
+    document.body.classList.add('no-scroll');
     const searchInputBox = document.createElement('input');
     Object.assign(searchInputBox, {
       type: 'text',
